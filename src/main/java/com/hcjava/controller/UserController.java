@@ -1,15 +1,23 @@
 package com.hcjava.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import javax.annotation.Resource;
 
-@Controller
-@ResponseBody
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.hcjava.service.UserService;
+import com.hcjava.util.NoteResult;
+
+@RestController
+@RequestMapping("/user")
 public class UserController {
 	
-	@RequestMapping("/hello")
-	public String hello() {
-		return "tttttt";
+	@Resource
+	private UserService userService;
+	
+	@PostMapping("/login")
+	public NoteResult hello(String name,String password) {
+		return userService.checkLogin(name, password);
 	}
 }

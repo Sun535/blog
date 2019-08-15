@@ -1,0 +1,52 @@
+//log_in.html主处理
+//登录处理
+$(function(){
+	//页面加载的时候调用这个方法
+	//给登录按钮绑定单击事件
+	$("#login").click(log_in);
+});
+function log_in(){
+	//1.获取请求参数值
+	var name=$("#count").val().trim();
+	var password=$("#password").val().trim();
+	//2.检查参数格式
+	$("#count_span").text("");
+	$("#password_span").text("");
+	var ok=true;
+	if (name==null||name=="") {
+		ok=false;
+		$("#count_span").text("用户名不能为空");
+	}
+	if (password==null||password=="") {
+		ok=false;
+		$("#password_span").text("密码不能为空");
+	}
+	if (!ok) {
+		return;
+	}
+	//3.发送Ajax
+	$.ajax({
+		type:"post",
+		url:"user/login.do",
+		data:{"name":name,"password":password},
+		dataType: "json",
+		success: function(result){
+			if (result.status==0) {
+				var user = result.data;
+				//写入cookie，2小时过期
+				addCookie("uid",user.cn_user_id,2);
+				addCookie("uname",user.cn_user_name,2);
+				//成功登录后跳转到主页面
+				window.location.href="edit.html";
+			}else if(result.status==1){//用户名不存在
+				$("#count_span").text(result.msg);
+			}else{
+				$("#count_span").text(result.msg);
+			}
+			console.log(result);
+		},
+		error: function(){
+			alert("登录异常")
+		}
+	});
+}

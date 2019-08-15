@@ -30,5 +30,8 @@
             </bean>
       </mvc:message-converters>
 	</mvc:annotation-driven>
+	
+	<mvc:resources mapping="/swagger/**" location="/WEB-INF/swagger/" cache-period="31556926"/>
+    <mvc:default-servlet-handler />
 </beans>
 

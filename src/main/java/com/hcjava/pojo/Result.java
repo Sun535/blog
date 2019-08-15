@@ -1,4 +1,4 @@
-package com.hcjava.entity;
+package com.hcjava.pojo;
 
 import lombok.Data;
 
@@ -24,14 +24,25 @@ public class Result<T> {
 		this.data=data;
 	}
 	
+	public Result(int code,String msg) {
+		this.code=code;
+		this.msg=msg;
+	}
+	
 	public static <T> Result<T> newSuccess() {
 		return new Result<>();
 	}
 	
+	public static <T> Result<T> newSuccess(String msg) {
+		return new Result<>(msg);
+	}
+	
 	public static <T> Result<T> newSuccess(T obj) {
-		Result<T> result = new Result<>();
-		result.setData(obj);
-		return result;
+		return new Result<>(obj);
+	}
+	
+	public static <T> Result<T> newError(int code,String msg){
+		return new Result<>(code,msg);
 	}
 
 }

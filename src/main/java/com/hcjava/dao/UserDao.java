@@ -1,5 +1,8 @@
 package com.hcjava.dao;
 
-public interface UserDao {
+import com.hcjava.pojo.User;
 
+public interface UserDao {
+	
+	User findByName(String username);
 }
