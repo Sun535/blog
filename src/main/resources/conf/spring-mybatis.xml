@@ -16,5 +16,34 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
 
+	<util:properties id="jdbc" location="classpath:conf/jdbc.properties"></util:properties>
+
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="driverClassName" value="#{jdbc.driver}"></property>
+		<property name="url" value="#{jdbc.url}"></property>
+		<property name="username" value="#{jdbc.username}"></property>
+		<property name="password" value="#{jdbc.password}"></property>
+		<!-- 初始大小 -->
+		<property name="maxActive" value="20" />
+     	<property name="initialSize" value="1" />
+     	<property name="minIdle" value="1" />
+	</bean>
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="mapperLocations" value="classpath:mapper/*.xml"></property>
+		<property name="typeAliasesPackage" value="com.hcjava.entity"></property>
+	</bean>
+	
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.hcjava.dao"></property>
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
 </beans>
 
