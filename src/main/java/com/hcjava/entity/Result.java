@@ -14,7 +14,7 @@ public class Result<T> {
 		this.code=0;
 		this.msg="ok";
 	}
-	
+	//测试中文
 	public Result(String msg) {
 		this.code=0;
 		this.msg=msg;
