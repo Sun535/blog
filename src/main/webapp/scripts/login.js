@@ -46,7 +46,7 @@ function log_in(){
 			console.log(result);
 		},
 		error: function(){
-			alert("登录异常")
+			alert("登录异常");
 		}
 	});
 }

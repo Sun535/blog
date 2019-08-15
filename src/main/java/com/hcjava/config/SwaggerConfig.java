@@ -17,17 +17,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @EnableWebMvc
 public class SwaggerConfig {
-	
-	public SwaggerConfig() {
-		System.out.println("初始化");
-	}
 	@Bean
 	public Docket createRestApi() {
-		System.out.println("初始化2");
 		return new Docket(DocumentationType.SWAGGER_2)
 				.apiInfo(apiInfo())
 				.select()
-				.apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+				.apis(RequestHandlerSelectors.basePackage("com.hcjava.controller"))
 				.paths(PathSelectors.any())
 				.build();
 	}

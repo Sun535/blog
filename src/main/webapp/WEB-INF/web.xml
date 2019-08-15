@@ -16,15 +16,13 @@
 	<servlet-mapping>
 		<servlet-name>springmvc</servlet-name>
 		<url-pattern>*.do</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>springmvc</servlet-name>
-		<url-pattern>/swagger-resources</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>springmvc</servlet-name>
 		<url-pattern>/v2/api-docs</url-pattern>
+    	<url-pattern>/swagger-resources</url-pattern>
+    	<url-pattern>/swagger-resources/configuration/security</url-pattern>
+    	<url-pattern>/swagger-resources/configuration/ui</url-pattern>
 	</servlet-mapping>
+	
+	
 	<filter>
 		<filter-name>CharacterEncodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
