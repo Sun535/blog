@@ -2,8 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
  "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper namespace="com.hcjava.dao.UserDao">
-	
+
 	<select id="findByName" parameterType="string" resultType="user">
-		select cn_user_id,cn_user_name,cn_user_password,cn_user_token,cn_user_nick from cn_user where cn_user_name=#{name}
+		select
+		cn_user_id,cn_user_name,cn_user_password,cn_user_token,cn_user_nick
+		from cn_user where cn_user_name=#{name}
 	</select>
+
+	<insert id="save" parameterType="user">
+		insert into
+		cn_user(cn_user_id,cn_user_name,cn_user_password,cn_user_nick)
+		values(#{cn_user_id},#{cn_user_name},#{cn_user_password},#{cn_user_nick})
+	</insert>
 </mapper>  

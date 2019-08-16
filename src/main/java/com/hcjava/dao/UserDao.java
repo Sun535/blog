@@ -5,4 +5,6 @@ import com.hcjava.pojo.User;
 public interface UserDao {
 	
 	User findByName(String username);
+	
+	public void save(User user);
 }

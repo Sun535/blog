@@ -5,7 +5,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.hcjava.dao.UserDao;
-import com.hcjava.pojo.Result;
 import com.hcjava.pojo.User;
 import com.hcjava.util.NoteException;
 import com.hcjava.util.NoteResult;
@@ -42,6 +41,32 @@ public class UserSerivceImpl implements UserService {
 		result.setMsg("登录成功");
 		result.setData(user);
 		return result;
+	}
+
+	@Override
+	public NoteResult addUser(String name, String password, String nick) {
+		NoteResult result=new NoteResult();
+		//检查是否重复
+		User user = userDao.findByName(name);
+		if (user!=null) {
+			result.setStatus(1);
+			result.setMsg("用户名已存在");
+			return result;
+		}
+		//执行注册
+		try {
+			user=new User();
+			//生成随机ID，设置userId
+			user.setCn_user_id(NoteUtil.createUUID());
+			user.setCn_user_name(name);//设置用户名
+			user.setCn_user_nick(nick);//设置昵称
+			user.setCn_user_password(NoteUtil.md5(password));//设置密码
+			userDao.save(user);
+			result.setMsg("注册成功");
+			return result;
+		} catch (Exception e) {
+			throw new NoteException("用户注册异常", e);
+		}
 	}
 
 }

@@ -4,6 +4,7 @@ $(function(){
 	//页面加载的时候调用这个方法
 	//给登录按钮绑定单击事件
 	$("#login").click(log_in);
+	$("#regist_button").click(registUser);
 });
 function log_in(){
 	//1.获取请求参数值
@@ -47,6 +48,68 @@ function log_in(){
 		},
 		error: function(){
 			alert("登录异常");
+		}
+	});
+}
+//注册方法
+function registUser(){
+	//1.获取参数
+	var name=$("#regist_username").val().trim();
+	var nick=$("#nickname").val().trim();
+	var password=$("#regist_password").val().trim();
+	var f_password=$("#final_password").val().trim();
+	//2.参数可是检查
+	$("#warning_1").hide();
+	$("#warning_2").hide();
+	$("#warning_3").hide();
+	var ok=true;
+	if (name=="") {
+		ok=false;
+		$("#warning_1").show();
+		$("#warning_1 span").html("用户名为空");
+	}
+	if (password=="") {
+		ok=false;
+		$("#warning_2").show();
+		$("#warning_2 span").html("密码为空");
+	}else if (password=="") {
+		ok=false;
+		$("#warning_2").show();
+		$("#warning_2 span").html("密码长度过短");
+	}
+	if (f_password=="") {
+		ok=false;
+		$("#warning_3").show();
+		$("#warning_3 span").html("确认密码不能为空");
+	}else if (password!=f_password) {
+		ok=false;
+		$("#warning_3").show();
+		$("#warning_3 span").html("密码不一致");
+	}
+	if (!ok) {
+		return;
+	}
+	//3.发送AJAX
+	$.ajax({
+		type:"post",
+		url: base_path+"/user/add.do",
+		data: {
+			"name":name,
+			"nick":nick,
+			"password":password,
+		},
+		dataType: "json",
+		success: function(result){
+			//对回调函数进行判断
+			if (result.status==0) {
+				$("#back").click();
+			}else if(result.status==1){
+				$("#warning_1").show();
+				$("#warning_1 span").html(result.msg);
+			}
+		},
+		error: function(){
+			alert("注册异常");
 		}
 	});
 }
