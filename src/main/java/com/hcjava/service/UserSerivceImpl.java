@@ -68,5 +68,4 @@ public class UserSerivceImpl implements UserService {
 			throw new NoteException("用户注册异常", e);
 		}
 	}
-
 }
