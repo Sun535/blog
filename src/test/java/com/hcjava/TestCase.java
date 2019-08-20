@@ -32,10 +32,8 @@ public class TestCase {
 	@Test
 	public void test2() {
 		try {
-			List<Note> findByBookId = noteDao.findByBookId("6d763ac9-dca3-42d7-a2a7-a08053095c08");
-			for (Note note : findByBookId) {
-				System.out.println(note);
-			}
+			 Note note = noteDao.findById("51b92c98d7274896b16c5a922dbdd555");
+			 System.out.println(note);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

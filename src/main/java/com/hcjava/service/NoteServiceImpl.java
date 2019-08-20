@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.hcjava.dao.NoteDao;
 import com.hcjava.pojo.Note;
 import com.hcjava.util.NoteResult;
+import com.hcjava.util.NoteUtil;
 
 @Service
 public class NoteServiceImpl implements NoteService {
@@ -22,6 +23,57 @@ public class NoteServiceImpl implements NoteService {
 		List<Note> list = noteDao.findByBookId(bookId);
 		result.setMsg("请求成功");
 		result.setData(list);
+		return result;
+	}
+
+	@Override
+	public NoteResult loadNote(String noteId) {
+		NoteResult result=new NoteResult();
+		Note note = noteDao.findById(noteId);
+		result.setMsg("请求成功");
+		result.setData(note);
+		return result;
+	}
+
+	@Override
+	public NoteResult updateNote(String noteId, String title, String body) {
+		NoteResult result=new NoteResult();
+		Note note = new Note();
+		note.setCn_note_id(noteId);
+		note.setCn_note_title(title);
+		note.setCn_note_body(body);
+		note.setCn_note_last_modify_time(System.currentTimeMillis());
+		int rows = noteDao.updateNote(note);
+		if (rows==1) {
+			result.setMsg("保存笔记成功");
+			return result;
+		}
+		result.setStatus(1);
+		result.setMsg("保存笔记失败");
+		return result;
+	}
+
+	@Override
+	public NoteResult addNote(String userId, String bookId,String title) {
+		NoteResult result=new NoteResult();
+		Note note = new Note();
+		note.setCn_note_id(NoteUtil.createUUID());
+		note.setCn_notebook_id(bookId);
+		note.setCn_user_id(userId);
+		note.setCn_note_title(title);
+		note.setCn_note_create_time(System.currentTimeMillis());
+		note.setCn_note_last_modify_time(System.currentTimeMillis());
+		note.setCn_note_status_id("1");
+		note.setCn_note_type_id("1");
+		note.setCn_note_body("");
+		int save = noteDao.save(note);
+		if (save==1) {
+			result.setData(note);
+			result.setMsg("笔记添加成功");
+			return result;
+		}
+		result.setStatus(1);
+		result.setMsg("笔记添加失败");
 		return result;
 	}
 }

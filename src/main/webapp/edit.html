@@ -299,11 +299,22 @@
 		<script type="text/javascript">
 		//页面加载完执行的方法
 		$(function(){
-			//2.执行加载笔记本的方法
+			//1.执行加载笔记本的方法
 			loadUserBooks();
 			//2.加载笔记的方法
 			$("#book_ul").on("click","li",loadnotes);
+			//3.给笔记li绑定单机事件
+			$("#note_ul").on("click","li",loadnote);
+			//4.绑定保存笔记按钮
+			$("#save_note").click(updateNote);
+			//5.关闭对话框
+			$("#can").on("click",".cancle,.close",closeAlertWindow);
 			
+			$("#add_notebook").click(alertAddBookWindow);
+			$(".modal-footer").on("click","#sure_addbook",addBook);
+			
+			$("#add_note").click(alertAddNoteWindow);
+			$(".modal-footer").on("click","#sure_addnote",addNote);
 		});
 		</script>
 		<!-- Bootstrap框架JS -->

@@ -8,4 +8,48 @@
 		cn_notebook_id,cn_user_id,cn_user_id,cn_notebook_name,cn_notebook_desc,cn_notebook_createtime
 		from cn_notebook where cn_user_id=#{userId};
 	</select>
+
+	<insert id="save" parameterType="book">
+		INSERT INTO cn_notebook
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test='null != cn_notebook_id'>
+				`cn_notebook_id`,
+			</if>
+			<if test='null != cn_user_id'>
+				`cn_user_id`,
+			</if>
+			<if test='null != cn_notebook_type_id'>
+				`cn_notebook_type_id`,
+			</if>
+			<if test='null != cn_notebook_name'>
+				`cn_notebook_name`,
+			</if>
+			<if test='null != cn_notebook_desc'>
+				`cn_notebook_desc`,
+			</if>
+			<if test='null != cn_notebook_createtime'>
+				`cn_notebook_createtime`
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test='null != cn_notebook_id'>
+				#{cn_notebook_id},
+			</if>
+			<if test='null != cn_user_id'>
+				#{cn_user_id},
+			</if>
+			<if test='null != cn_notebook_type_id'>
+				#{cn_notebook_type_id},
+			</if>
+			<if test='null != cn_notebook_name'>
+				#{cn_notebook_name},
+			</if>
+			<if test='null != cn_notebook_desc'>
+				#{cn_notebook_desc},
+			</if>
+			<if test='null != cn_notebook_createtime'>
+				#{cn_notebook_createtime}
+			</if>
+		</trim>
+	</insert>
 </mapper>  

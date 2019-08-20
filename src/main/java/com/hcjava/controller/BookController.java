@@ -20,4 +20,9 @@ public class BookController {
 	public NoteResult loadbooks(String userId) {
 		return bookService.loadUserBooks(userId);
 	}
+	
+	@PostMapping("/add.do")
+	public NoteResult add(String userId,String bookName) {
+		return bookService.addBook(userId, bookName);
+	}
 }

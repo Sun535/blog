@@ -45,3 +45,34 @@ function createBookLi(bookName,bookId){
 	$li.data("bookId",bookId);
 	$("#book_ul").append($li);
 }
+
+function addBook(){
+	var bookName=$("#input_notebook").val().trim();
+	var userId=getCookie("uid");
+	
+	if (bookName=="") {
+		$("#notebook_span").text("笔记本名称不能为空");
+		return;
+	}
+	
+	$.ajax({
+		type: "post",
+		url: base_path+"/book/add.do",
+		data: {
+			"bookName":bookName,
+			"userId":userId
+		},
+		dataType: "json",
+		success: function(result){
+			if (result.status==0) {
+				var book=result.data;
+				createBookLi(book.cn_notebook_name,book.cn_notebook_id);
+				alert("添加成功");
+				closeAlertWindow();
+			}
+		},
+		error: function(){
+			
+		}
+	});
+}
