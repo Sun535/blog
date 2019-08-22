@@ -50,6 +50,10 @@ function addBook(){
 	var bookName=$("#input_notebook").val().trim();
 	var userId=getCookie("uid");
 	
+	if (userId==null) {
+		location.href="login_in.html";
+	}
+	
 	if (bookName=="") {
 		$("#notebook_span").text("笔记本名称不能为空");
 		return;
@@ -67,8 +71,7 @@ function addBook(){
 			if (result.status==0) {
 				var book=result.data;
 				createBookLi(book.cn_notebook_name,book.cn_notebook_id);
-				alert("添加成功");
-				closeAlertWindow();
+				alert(result.msg);
 			}
 		},
 		error: function(){

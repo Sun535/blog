@@ -126,7 +126,7 @@
 					<div class="module" data-toggle="niceScroll">
 						<div class="chat-contact">
 							<div class="contact-body">
-								<ul class="contacts-list">
+								<ul id="rollbock_ul" class="contacts-list">
 									<li class="disable"><a ><i class="fa fa-file-text-o" title="online" rel="tooltip-bottom"></i> 虚假回收站笔记<button type="button" class="btn btn-default btn-xs btn_position btn_delete"><i class="fa fa-times"></i></button><button type="button" class="btn btn-default btn-xs btn_position_2 btn_replay"><i class="fa fa-reply"></i></button></a></li>
 								</ul>
 							</div>
@@ -310,11 +310,48 @@
 			//5.关闭对话框
 			$("#can").on("click",".cancle,.close",closeAlertWindow);
 			
+			//添加笔记本
 			$("#add_notebook").click(alertAddBookWindow);
-			$(".modal-footer").on("click","#sure_addbook",addBook);
-			
+			$("#can").on("click","#sure_addbook",addBook);
+			//添加笔记
 			$("#add_note").click(alertAddNoteWindow);
-			$(".modal-footer").on("click","#sure_addnote",addNote);
+			$("#can").on("click","#sure_addnote",addNote);
+			//下拉点击事件
+			$("#note_ul").on("click","li .btn_slide_down",alertMenu);
+			$("body").click(hideNoteMenu);
+			//笔记删除
+			$("#note_ul").on("click","li .btn_delete",alertDeleteNoteWindow);
+			$("#can").on("click","#sure_deletenote",deleteNote);
+			//笔记移动
+			$("#note_ul").on("click","li .btn_move",alertMoveNoteWindow);
+			$("#can").on("click","#sure_movenote",moveNote);
+			//$("#note_ul").on("click","li .btn_share",alertMoveNoteWindow);
+			
+			//回收站
+			$("#rollback_button").click(function(){
+				$("div[id^='pc_part_']").css("display","none");
+				$("#pc_part_4,#pc_part_1,#pc_part_2").css("display","block");
+				rollbackNotes();
+			});
+			//彻底删除
+			$("#rollbock_ul").on("click",".btn_delete",function(){
+				$("#can").load("alert/alert_delete_rollback.html");
+				$(".opacity_bg").show();
+			});
+			$("#can").on("click",".sure",remove);
+			//恢复
+			$("#rollbock_ul").on("click",".btn_replay",function(){
+				$("#can").load("alert/alert_replay.html");
+				$(".opacity_bg").show();
+			});
+			
+			
+			//退出
+			$("#logout").click(function(){
+				delCookie("uid");
+				delCookie("uname");
+				location.href="log_in.html";
+			});
 		});
 		</script>
 		<!-- Bootstrap框架JS -->

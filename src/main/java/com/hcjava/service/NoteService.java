@@ -10,4 +10,10 @@ public interface NoteService {
 	NoteResult updateNote(String noteId,String title,String body);
 	
 	NoteResult addNote(String userId,String bookId,String title);
+	
+	NoteResult deleteNote(String noteId);
+	
+	NoteResult moveNote(String noteId,String bookId);
+	
+	NoteResult rollbackNotes(String userId);
 }
